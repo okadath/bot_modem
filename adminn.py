@@ -115,7 +115,7 @@ IP_list=["A4.FC.77.96.CE.8F","2C.CC.44.EB.86.D5"]
 
 while True:
 	driver.get("http://10.0.0.1/connected_devices_computers.asp")
-	sleep(randrange(60))
+	sleep(randrange(3*60))
 	lock_dispositives(IP_list[randrange(len(IP_list))])
 
 	to_window_manager()
