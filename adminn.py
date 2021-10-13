@@ -5,6 +5,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.chrome.options import Options as GoogleOptions
 from time import sleep
+from random import randrange
 
 import argparse
  
@@ -45,6 +46,7 @@ def lock_dispositives(i):
 			button_ok.click()
 			sleep(1)
 		except Exception as e:
+			# print(e)
 			pass
 		try:
 			button__mac=driver.find_element_by_xpath("//div[@class='module forms data']//table//tbody//tr//td[1]//div[@id='"+val_ip_div+"']//..//..//td[5]")
@@ -54,7 +56,7 @@ def lock_dispositives(i):
 			button_ok.click()
 			sleep(1)
 		except Exception as e:
-			# raise e
+			# print(e)
 			pass
 
 
@@ -79,11 +81,27 @@ def unlock(i):
 		button_ok.click()
 		sleep(1)
 	except Exception as e:
-		print(e)
+		# print(e)
+		pass
+
+
+
+def to_window_manager():
+	sleep(3)
+	button__par=driver.find_element_by_xpath("//li[@class='nav-parental-control']")
+	button__par.click()
+	sleep(2)
+	button__dev=driver.find_element_by_xpath("//li[@class='nav-devices']")
+	button__dev.click()
+
+	# try:
+	# 	button__mac=driver.find_element_by_xpath("//label[@id='Enable']") 
+	# 	button__mac.click()
+	# 	sleep(2)
+	# except Exception as e:
+	# 	print(e) 
 
 driver=init_client()
-
-
 driver.get("http://10.0.0.1/")
 sleep(1)
 login(driver)
@@ -93,27 +111,18 @@ driver.get("http://10.0.0.1/connected_devices_computers.asp")
 IP_list=["A4.FC.77.96.CE.8F","2C.CC.44.EB.86.D5"]
 # IP_list=["7C:91:22:52:24:4E"]"72.7A.C2.80.4A.7B"
 
-for i in IP_list:
-	lock_dispositives(i)
+# for i in IP_list:
 
-sleep(3)
-button__par=driver.find_element_by_xpath("//li[@class='nav-parental-control']")
-button__par.click()
-sleep(2)
-button__dev=driver.find_element_by_xpath("//li[@class='nav-devices']")
-button__dev.click()
+while True:
+	driver.get("http://10.0.0.1/connected_devices_computers.asp")
+	sleep(randrange(60))
+	lock_dispositives(IP_list[randrange(len(IP_list))])
 
-try:
+	to_window_manager()
 
-	button__mac=driver.find_element_by_xpath("//label[@id='Enable']") 
-	button__mac.click()
-	sleep(2)
-except Exception as e:
-	print(e) 
+	sleep(5)
+	# for i in IP_list: 
+	unlock(IP_list[randrange(len(IP_list))])
 
-
-sleep(5)
-for i in IP_list: 
-	unlock(i)
 
 
