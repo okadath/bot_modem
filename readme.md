@@ -28,7 +28,11 @@ button__mac=driver.find_element_by_xpath("//div[@id='blocked-devices']//table[@c
 ```
 
 `//*` nos deja elegir cualquier item de ese nivel
+
 `//..` es para el padre de un item, tambien esta parent, sibling y mas pero no los cheque 
+
 `//td[5]` nos deja elegir por numero directamente en una lista de tags
+
 `//td[text()='texto_1']` busca el texto dentro de una etiqueta `<td>texto_1</td>`
+
 `/td[text()='"+val_ip_td+"']` es para pasar variables de python al string
